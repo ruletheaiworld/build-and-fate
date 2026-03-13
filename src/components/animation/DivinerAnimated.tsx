@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
-type Phase = 'brush' | 'chars' | 'seal' | 'done';
+type Phase = 'brush' | 'narration' | 'chars' | 'seal' | 'done';
 
 interface DivinerAnimatedProps {
   phase: Phase;
@@ -24,6 +24,20 @@ const imageVariants: Record<string, any> = {
       opacity: { duration: 1.5 },
       scale: { duration: 1.5 },
       filter: { duration: 1.5 },
+    },
+  },
+  narration: {
+    opacity: 0.5,
+    scale: 1.01,
+    y: [0, -6, 0],
+    rotate: [0, -0.3, 0, 0.3, 0],
+    filter: 'sepia(0.25) contrast(1.1) drop-shadow(0 0 18px rgba(201,168,76,0.25))',
+    transition: {
+      y: { duration: 3, repeat: Infinity, ease: 'easeInOut' },
+      rotate: { duration: 3.5, repeat: Infinity, ease: 'easeInOut' },
+      opacity: { duration: 0.8 },
+      scale: { duration: 0.8 },
+      filter: { duration: 0.8 },
     },
   },
   chars: {
@@ -56,6 +70,11 @@ const glowVariants: Record<string, any> = {
     opacity: 0.06,
     scale: 1,
     transition: { duration: 1.5 },
+  },
+  narration: {
+    opacity: 0.08,
+    scale: 1.05,
+    transition: { duration: 0.8 },
   },
   chars: {
     opacity: 0.12,

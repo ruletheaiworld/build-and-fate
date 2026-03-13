@@ -1,30 +1,73 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import BrushStroke from './BrushStroke';
 import DivinerAnimated from './DivinerAnimated';
 
 interface DivinationSequenceProps {
   onComplete: () => void;
+  sect?: string;
+  element?: string;
 }
 
 const flashChars = ['天', '命', '運', '氣', '道', '劍', '龍', '鳳'];
 
-export default function DivinationSequence({ onComplete }: DivinationSequenceProps) {
-  const [phase, setPhase] = useState<'brush' | 'chars' | 'seal' | 'done'>('brush');
+const SECT_LINES: Record<string, string> = {
+  '화산파': '화산의 험준한 봉우리에서 검기가 일어서는구나...',
+  '소림사': '천년 고찰의 목탁 소리가 울려퍼지는도다...',
+  '무당파': '무당산의 안개 속에서 도의 기운이 흐르는구나...',
+  '개방': '천하를 떠도는 자유로운 바람이 부는도다...',
+  '사천당문': '은밀한 독안개 속에서 기관의 소리가 들리는구나...',
+  '마교': '어둠 속에서 파격의 기운이 솟구치는도다...',
+  '천잔궁': '높고 고고한 곳에서 홀로 빛나는 기운이로다...',
+};
+
+const ELEMENT_LINES: Record<string, string> = {
+  '금': '금(金)의 기운이 날카롭게 내리꽂힌다...',
+  '목': '목(木)의 기운이 힘차게 뻗어나가는도다...',
+  '수': '수(水)의 기운이 고요히 흘러드는구나...',
+  '화': '화(火)의 기운이 활활 타오르는도다...',
+  '토': '토(土)의 기운이 묵직하게 감싸는구나...',
+};
+
+type Phase = 'brush' | 'narration' | 'chars' | 'seal' | 'done';
+
+export default function DivinationSequence({ onComplete, sect, element }: DivinationSequenceProps) {
+  const [phase, setPhase] = useState<Phase>('brush');
+
+  const sectLine = sect ? SECT_LINES[sect] : null;
+  const elementLine = element ? ELEMENT_LINES[element] : null;
+  const hasNarration = !!(sectLine || elementLine);
+
+  const narrationLines = useMemo(() => {
+    const lines: string[] = [];
+    if (sectLine) lines.push(sectLine);
+    if (elementLine) lines.push(elementLine);
+    return lines;
+  }, [sectLine, elementLine]);
+
+  const narrationDuration = narrationLines.length * 1200;
 
   useEffect(() => {
+    const brushEnd = 1800;
+    const narrationEnd = brushEnd + (hasNarration ? narrationDuration + 400 : 0);
+    const charsEnd = narrationEnd + 1400;
+    const sealEnd = charsEnd + 1300;
+
     const timers = [
-      setTimeout(() => setPhase('chars'), 1800),
-      setTimeout(() => setPhase('seal'), 3200),
+      ...(hasNarration
+        ? [setTimeout(() => setPhase('narration'), brushEnd)]
+        : []),
+      setTimeout(() => setPhase('chars'), narrationEnd),
+      setTimeout(() => setPhase('seal'), charsEnd),
       setTimeout(() => {
         setPhase('done');
         onComplete();
-      }, 4500),
+      }, sealEnd),
     ];
     return () => timers.forEach(clearTimeout);
-  }, [onComplete]);
+  }, [onComplete, hasNarration, narrationDuration]);
 
   return (
     <AnimatePresence>
@@ -43,6 +86,29 @@ export default function DivinationSequence({ onComplete }: DivinationSequencePro
 
           {/* Brush strokes */}
           {(phase === 'brush' || phase === 'chars') && <BrushStroke />}
+
+          {/* Narration — sect/element lines */}
+          {phase === 'narration' && (
+            <div className="relative z-10 flex flex-col items-center gap-4 px-8 max-w-md">
+              {narrationLines.map((line, i) => (
+                <motion.p
+                  key={line}
+                  className="font-serif-kr text-wuxia-parchment/60 text-lg text-center leading-relaxed"
+                  style={{ textShadow: '0 0 12px rgba(201,168,76,0.15)' }}
+                  initial={{ opacity: 0, y: 10, filter: 'blur(4px)' }}
+                  animate={{ opacity: [0, 0.9, 0.9, 0], y: [10, 0, 0, -5], filter: ['blur(4px)', 'blur(0px)', 'blur(0px)', 'blur(2px)'] }}
+                  transition={{
+                    duration: 1.2,
+                    delay: i * 1.2,
+                    times: [0, 0.2, 0.75, 1],
+                    ease: 'easeInOut',
+                  }}
+                >
+                  {line}
+                </motion.p>
+              ))}
+            </div>
+          )}
 
           {/* Flashing characters — 2 at a time across all 8 */}
           {phase === 'chars' && (

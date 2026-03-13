@@ -50,7 +50,7 @@ export default function ResultContent() {
   return (
     <>
       {phase === 'animation' && (
-        <DivinationSequence onComplete={handleAnimationComplete} />
+        <DivinationSequence onComplete={handleAnimationComplete} sect={sect} element={element} />
       )}
 
       {phase === 'steps' && fortune && (

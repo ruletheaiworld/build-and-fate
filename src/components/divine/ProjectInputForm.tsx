@@ -77,7 +77,7 @@ export default function ProjectInputForm() {
       {/* 대업 설명 */}
       <div className="space-y-2">
         <label className="block font-serif-kr text-wuxia-gold/70 text-sm">
-          어떤 대업을 이루고자 하는가? <span className="text-wuxia-parchment/30">(선택)</span>
+          그 뜻을 풀어 이르시오 <span className="text-wuxia-parchment/30">(선택)</span>
         </label>
         <textarea
           value={desc}
