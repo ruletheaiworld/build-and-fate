@@ -147,12 +147,14 @@ export default function DivinationSequence({ onComplete, sect, element }: Divina
               transition={{ type: 'spring', stiffness: 300, damping: 12 }}
             >
               {/* Outer border */}
-              <div className="p-1 border border-wuxia-crimson/25">
+              <div className="p-1" style={{ borderColor: 'rgba(139,69,19,0.25)', borderWidth: 1, borderStyle: 'solid' }}>
                 <div
-                  className="w-28 h-28 flex items-center justify-center border-[3px] border-wuxia-crimson font-serif-kr text-3xl font-bold text-wuxia-crimson backdrop-blur-sm"
+                  className="w-28 h-28 flex items-center justify-center border-[3px] font-serif-kr text-3xl font-bold backdrop-blur-sm"
                   style={{
-                    background: 'linear-gradient(135deg, rgba(191,53,38,0.1), rgba(191,53,38,0.04))',
-                    boxShadow: 'inset 0 0 10px rgba(191,53,38,0.12)',
+                    color: '#8b4513',
+                    borderColor: '#8b4513',
+                    background: 'linear-gradient(135deg, rgba(139,69,19,0.1), rgba(139,69,19,0.04))',
+                    boxShadow: 'inset 0 0 10px rgba(139,69,19,0.12)',
                   }}
                 >
                   點卦

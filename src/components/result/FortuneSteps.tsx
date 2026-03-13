@@ -195,8 +195,8 @@ export default function FortuneSteps({ fortune, projectName, onComplete }: Fortu
       </div>
 
       {/* Content area */}
-      <div className="relative z-10 flex flex-col min-h-screen">
-        <div className="flex-1 flex items-center justify-center px-6 py-20">
+      <div className="relative z-10 flex flex-col min-h-screen overflow-y-auto">
+        <div className="flex-1 flex items-start justify-center px-6 py-20">
           <AnimatePresence mode="wait">
             <motion.div
               key={step}

@@ -217,7 +217,7 @@ body {
 /* ── Fortune level colors ── */
 
 .fortune-great   { color: #d4af37; text-shadow: 0 0 8px rgba(212, 175, 55, 0.3); }
-.fortune-good    { color: #6b9e78; text-shadow: 0 0 6px rgba(107, 158, 120, 0.2); }
+.fortune-good    { color: #5b8ab5; text-shadow: 0 0 6px rgba(91, 138, 181, 0.2); }
 .fortune-neutral { color: #8c8578; }
 .fortune-bad     { color: #c2614b; text-shadow: 0 0 6px rgba(194, 97, 75, 0.2); }
 .fortune-terrible { color: #a63020; text-shadow: 0 0 10px rgba(166, 48, 32, 0.35); }

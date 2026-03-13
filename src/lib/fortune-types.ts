@@ -39,7 +39,7 @@ export const FORTUNE_LEVEL_INFO: Record<FortuneLevel, FortuneLevelInfo> = {
     label: '吉',
     description: '순풍에 돛을 단 운세',
     colorClass: 'fortune-good',
-    barColor: '#4ade80',
+    barColor: '#60a5fa',
     percentage: 75,
     image: '/images/fortune-good.jpg',
   },
