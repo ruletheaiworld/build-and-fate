@@ -47,10 +47,10 @@ export default function DivinationSequence({ onComplete, sect, element }: Divina
     return lines;
   }, [sectLine, elementLine]);
 
-  const narrationDuration = narrationLines.length * 900;
+  const narrationDuration = narrationLines.length * 1400;
 
   useEffect(() => {
-    const brushEnd = 1200;
+    const brushEnd = 900;
     const narrationEnd = brushEnd + (hasNarration ? narrationDuration + 400 : 0);
     const charsEnd = narrationEnd + 1400;
     const sealEnd = charsEnd + 1300;
@@ -98,9 +98,9 @@ export default function DivinationSequence({ onComplete, sect, element }: Divina
                   initial={{ opacity: 0, y: 10, filter: 'blur(4px)' }}
                   animate={{ opacity: [0, 1, 1, 0], y: [10, 0, 0, -5], filter: ['blur(4px)', 'blur(0px)', 'blur(0px)', 'blur(2px)'] }}
                   transition={{
-                    duration: 0.9,
-                    delay: i * 0.9,
-                    times: [0, 0.2, 0.75, 1],
+                    duration: 1.4,
+                    delay: i * 1.4,
+                    times: [0, 0.1, 0.85, 1],
                     ease: 'easeInOut',
                   }}
                 >
